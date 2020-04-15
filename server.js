@@ -15,6 +15,7 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
+
 // Configurations
 const appConfig = require('./configs/app');
 
@@ -54,16 +55,20 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/', express.static(__dirname + '/public'));
 app.use('/', webRoutes);
 
-
 io.on('connection', (socket) => {
   console.log('Client connected');
   socket.emit('toast', {message: "Conectado con el servidor"});
+  let i = 0;
+  setInterval(() => {
+    socket.emit('toast', {message: "Conectado con el servidor"});
+    i++;
+  }, 10000)
   socket.on('message-to-server', (data) => {
     console.log('message received', data);
   });
 });
 
 // App init
-app.listen(appConfig.expressPort, () => {
+server.listen(appConfig.expressPort, () => {
   console.log(`Server is listenning on ${appConfig.expressPort}! (http://localhost:${appConfig.expressPort})`);
 });
