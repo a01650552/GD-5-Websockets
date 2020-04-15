@@ -68,15 +68,27 @@ io.on('connection', (socket) => {
   });
 });
 
+const result = {
+  VICTORY: '¡Has ganado!',
+  DEFEAT: '¡Perdiste! Mejor suerte la próxima',
+  TIE: 'Ha habido un empate',
+  NS: 'El juego no ha empezado'
+}
+
+const gameStatus = {
+  FINISHED: true,
+  NOTFINISHED: false,
+  NOTSTARTED: false
+}
+
 //clase jugador
 class Player {
-  
   constructor(socket) {
       this.socket = socket;
       this.id = socket.id;
       this.opponent = 'unmatched';
       this.points = 0;
-      this.result = 'el juego no ha empezado'
+      this.result = result.NS;
   }
 
   setOpponent(opponent) {
@@ -84,7 +96,14 @@ class Player {
   }
 }
 
-
+//la clase para el tablero
+class Board {
+  constructor(){
+    this.players = [];
+    this.letter = null;
+    this.status = gameStatus.NOTSTARTED;
+  }
+}
 
 // App init
 server.listen(appConfig.expressPort, () => {
