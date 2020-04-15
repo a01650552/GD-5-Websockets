@@ -68,6 +68,24 @@ io.on('connection', (socket) => {
   });
 });
 
+//clase jugador
+class Player {
+  
+  constructor(socket) {
+      this.socket = socket;
+      this.id = socket.id;
+      this.opponent = 'unmatched';
+      this.points = 0;
+      this.result = 'el juego no ha empezado'
+  }
+
+  setOpponent(opponent) {
+    this.opponent = opponent;
+  }
+}
+
+
+
 // App init
 server.listen(appConfig.expressPort, () => {
   console.log(`Server is listenning on ${appConfig.expressPort}! (http://localhost:${appConfig.expressPort})`);
