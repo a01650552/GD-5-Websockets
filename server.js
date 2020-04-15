@@ -11,6 +11,9 @@ let passport = require('passport');
 // Express app creation
 const app = express();
 
+//Socket.io
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 // Configurations
 const appConfig = require('./configs/app');
@@ -48,6 +51,7 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: true }))
 
 // Routes
+app.use('/', express.static(__dirname + '/public'));
 app.use('/', webRoutes);
 
 // App init
