@@ -54,6 +54,15 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/', express.static(__dirname + '/public'));
 app.use('/', webRoutes);
 
+
+io.on('connection', (socket) => {
+  console.log('Client connected');
+  socket.emit('toast', {message: "Conectado con el servidor"});
+  socket.on('message-to-server', (data) => {
+    console.log('message received', data);
+  });
+});
+
 // App init
 app.listen(appConfig.expressPort, () => {
   console.log(`Server is listenning on ${appConfig.expressPort}! (http://localhost:${appConfig.expressPort})`);
