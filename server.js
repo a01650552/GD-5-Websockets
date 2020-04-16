@@ -103,6 +103,24 @@ class Board {
     this.letter = null;
     this.status = gameStatus.NOTSTARTED;
   }
+
+  getLetter(){
+    var alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    var position = Math.floor(Math.random() * alphabet.length)
+    this.randomLetter = letters.charAt(position);
+    return this.randomLetter;
+  }
+
+   addPlayer(player) {
+    if (this.players.length < 2) {
+      this.players.push(player);
+      if(this.players.length == 2) {
+        this.players[0].opponent = this.players[1];
+        this.players[1].opponent = this.players[0];
+      }
+    }
+   }
+  
 }
 
 // App init
