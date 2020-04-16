@@ -55,19 +55,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/', express.static(__dirname + '/public'));
 app.use('/', webRoutes);
 
-io.on('connection', (socket) => {
-  console.log('Client connected');
-  socket.emit('toast', {message: "Conectado con el servidor"});
-  let i = 0;
-  setInterval(() => {
-    socket.emit('toast', {message: "Conectado con el servidor"});
-    i++;
-  }, 10000)
-  socket.on('message-to-server', (data) => {
-    console.log('message received', data);
-  });
-});
-
 const result = {
   VICTORY: '¡Has ganado!',
   DEFEAT: '¡Perdiste! Mejor suerte la próxima',
@@ -122,6 +109,24 @@ class Board {
    }
   
 }
+
+let basta = new Board();
+
+io.on('connection', (socket) => {
+  
+  player = new Player(socket);
+  basta.addPlayer(player);  
+
+  socket.emit('toast', {message: `Bienvenido ${player.id}`});
+  console.log(`Conectado: ${player.id}`)
+
+  socket.emit('player', player.id);
+
+  socket.on('message-to-server', (data) => {
+    console.log('message received', data);
+  });
+  
+});
 
 // App init
 server.listen(appConfig.expressPort, () => {

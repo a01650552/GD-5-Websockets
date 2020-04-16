@@ -1,3 +1,4 @@
+
 function showToast(msg) {
     console.log("El mensaje es: ", msg);
     $.toast({
@@ -13,6 +14,10 @@ function connectToSocketio() {
 
     window.socket.on('toast', function(data){
         showToast(data.message);
+    })
+
+    window.socket.on('player', function(data){
+        document.getElementById("usuario").innerHTML = `Bienvenido a Basta, ${data}`; 
     })
 }
 
