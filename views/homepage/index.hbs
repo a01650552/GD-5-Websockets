@@ -1,14 +1,29 @@
 <main role="main" class="container">
   <div class="row">
-    <div class="col-12">
-      <input type="button" 
-            value="Send toast" 
-            class="btn btn-success"
-            onClick="showToast('mi mensaje')"></input>
-      <input type="button" 
-            value="Send Message" 
-            class="btn btn-success"
-            onClick="messageToServer('mensaje desde el cliente')"></input>
+    <div class="col text-center">
+      <p>Bienvenido a Basta</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <form>
+        <div class="form-group">
+          <label for="nombre" class="label">Nombre</label><br>
+          <input type="text" name="nombre" id="nombre" class="input">
+        </div>
+
+        <div class="form-group">
+          <label for="color" class="label">Color</label><br>
+          <input type="text" name="color" id="color" class="input">
+        </div>
+
+        <div class="form-group">
+          <label for="fruto" class="label">Fruto</label><br>
+          <input type="text" name="fruto" id="fruto" class="input">
+        </div>
+
+        <button class="btn btn-info">Basta</button>
+      </form>
     </div>
   </div>
 </main>
