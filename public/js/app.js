@@ -57,6 +57,10 @@ function connectToSocketio() {
         showResults(data.winner, data.points)
     })
 
+    window.socket.on("hideGame", function(data){
+        hideGame()
+    })
+
 }
 
 
@@ -76,7 +80,12 @@ function showGame() {
     document.getElementById("fruto").value = '';
     document.getElementById("status").innerHTML = ``;
     document.getElementById("start"). hidden = false;
-    document.getElementById("btnBasta").hidden = true; 
+    document.getElementById("btnBasta").hidden = true;
+    document.getElementById("btnLobby").hidden = true; 
+}
+
+function hideGame() {
+    document.getElementById("juego").hidden = true;
 }
 
 function startGame() {
@@ -119,7 +128,9 @@ function showResults(winner, points) {
     } else {
         document.getElementById("status").innerHTML = `Perdiste. Obtuviste ${points} puntos. ¡Mejor suerte la próxima!`;
     }
+    document.getElementById("btnLobby").hidden = false;
 }
+
 
 $(function () {
     connectToSocketio();

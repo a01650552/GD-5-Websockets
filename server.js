@@ -144,6 +144,12 @@ class Board {
       }
     }
   }
+
+  changeToLobby() {
+    for(i = 0; i < 2; i++){
+      this.lobby.push(this.players.pop());
+    }
+  }
   
   getResults() {
     console.log("Jugador 0: ", this.players[0].id);
@@ -292,8 +298,16 @@ io.on('connection', (socket) => {
         basta.players[0].socket.emit('resultado', {points: basta.players[0].points, winner: "tie"});
         basta.players[1].socket.emit('resultado', {points: basta.players[1].points, winner: "tie"});
       }
+      basta.players[0].points = 0;
+      basta.players[1].points = 0;
+      basta.players[0].socket.emit("hideGame");
+      basta.players[1].socket.emit("hideGame");
+      basta.deletePlayer(basta.players[0].id);
+      basta.deletePlayer(basta.players[1].id)
+      basta.addFromLobby();
     }
   })
+
 
   socket.on('message-to-server', (data) => {
     console.log('message received', data);
