@@ -2,10 +2,11 @@
   <div class="row">
     <div class="col text-center">
       <p id="usuario">Bienvenido a Basta</p>
+      <p id="status">Eres el primer jugador, ¡espera a tu oponente!</p>
     </div>
   </div>
   <div class="row">
-    <div class="col text-center">
+    <div class="col text-center" id="juego" hidden>
       <form>
         <div class="form-group">
           <label for="nombre" class="label">Nombre</label><br>
@@ -21,8 +22,8 @@
           <label for="fruto" class="label">Fruto</label><br>
           <input type="text" name="fruto" id="fruto" class="input">
         </div>
-
-        <button class="btn btn-info">Basta</button>
+        <button class="btn btn-info" id="start" onClick="startGame()" type="button">Iniciar</button>
+        <button class="btn btn-info" id="btnBasta" onClick="basta()" type="button" hidden>Basta</button>
       </form>
     </div>
   </div>
