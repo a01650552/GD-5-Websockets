@@ -97,6 +97,7 @@ class Board {
     this.lobby = [];
     this.letter = '';
     this.answersRecieved = 0;
+    this.active = false;
   }
 
   getLetter(){
@@ -231,15 +232,12 @@ io.on('connection', (socket) => {
 
   socket.emit('player', {id: player.id, status: player.status});
 
-  if(basta.players == 2){
-    socket.emit('hideGame');
-  }
-
-  if (basta.players.length == 2){
+  if (basta.players.length == 2 && basta.active === false){
     for(i = 0; i < basta.players.length; i++){
       basta.players[i].socket.emit('showGame');
     }
-  }
+    basta.active = true;
+  } 
 
   socket.on("disconnect", () => {
     console.log("Disconnected: ", socket.id);
@@ -247,11 +245,11 @@ io.on('connection', (socket) => {
     if(basta.players.length > 0){
       if(basta.players.length == 1){
         basta.players[0].socket.emit('init');
-      } else{
+      } /*else if(basta.players.length == 2 && basta.active == true){
         for(i = 0; i < basta.players.length; i++){
           basta.players[i].socket.emit('showGame');
         }
-      }
+      } */
     }
   });
 
@@ -302,9 +300,14 @@ io.on('connection', (socket) => {
       basta.players[1].points = 0;
       basta.players[0].socket.emit("hideGame");
       basta.players[1].socket.emit("hideGame");
+      basta.deletePlayer(basta.players[1].id);
       basta.deletePlayer(basta.players[0].id);
-      basta.deletePlayer(basta.players[1].id)
-      basta.addFromLobby();
+      basta.answersRecieved = 0;
+      basta.active = false;
+      if(basta.players.length == 2){
+        basta.players[0].socket.emit("showGame");
+        basta.players[1].socket.emit("showGame");
+      }
     }
   })
 
